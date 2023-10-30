@@ -1,15 +1,32 @@
+import { useGetAllCategoryQuery, useGetAllTagQuery } from "../features/auth/slices/blogAdminPanelOthers/blogOtherAdminPanelSlices";
 import {
   useAllUserQuery,
   useAuthUserQuery,
 } from "../features/auth/slices/userApiSlices";
-import EmailVerify from "./EmailVerify";
+// import EmailVerify from "./EmailVerify";
 
 function HomeCard() {
+  // all user query
   const { users } = useAllUserQuery(undefined, {
     selectFromResult: ({ data }) => ({
       users: data?.data?.totalUsers,
     }),
   });
+
+  // tag query
+  const { allCategory } = useGetAllCategoryQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      allCategory: data,
+    }),
+  });
+
+  // tag query
+  const { allTag } = useGetAllTagQuery(undefined, {
+    selectFromResult: ({ data }) => ({
+      allTag: data,
+    }),
+  });
+  // login user
   const { authUser } = useAuthUserQuery(undefined, {
     selectFromResult: ({ data }) => ({
       authUser: data,
@@ -20,44 +37,38 @@ function HomeCard() {
       <div className="container-fluid pt-4 px-4">
         <div className="row g-4">
           {authUser?.role?.includes("admin") ? (
-            <div className="col-sm-6 col-xl-3">
-              <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                <i className="fa fa-solid fa-users fa-3x text-primary"></i>
-                <div className="ms-3">
-                  <p className="mb-2">Total User</p>
-                  <h6 className="mb-0">{users?.length}</h6>
+            <>
+              <div className="col-sm-6 col-xl-3">
+                <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                  <i className="fa fa-solid fa-users fa-3x text-primary"></i>
+                  <div className="ms-3">
+                    <p className="mb-2">Total User</p>
+                    <h6 className="mb-0">{users?.length}</h6>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : null}
 
-          <div className="col-sm-6 col-xl-3">
-            <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
-              <i className="fa fa-chart-bar fa-3x text-primary"></i>
-              <div className="ms-3">
-                <p className="mb-2">Total Sale</p>
-                <h6 className="mb-0">$1234</h6>
+              <div className="col-sm-6 col-xl-3">
+                <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                  <i className="fa fa-solid fa-list fa-3x text-primary"></i>
+                  <div className="ms-3">
+                    <p className="mb-2">Total Category</p>
+                    <h6 className="mb-0">{allCategory?.length}</h6>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="col-sm-6 col-xl-3">
-            <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
-              <i className="fa fa-chart-area fa-3x text-primary"></i>
-              <div className="ms-3">
-                <p className="mb-2">Today Revenue</p>
-                <h6 className="mb-0">$1234</h6>
+
+              <div className="col-sm-6 col-xl-3">
+                <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                  <i className="fa fa-solid fa-tags fa-3x text-primary"></i>
+                  <div className="ms-3">
+                    <p className="mb-2">Total Tag</p>
+                    <h6 className="mb-0">{allTag?.length}</h6>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="col-sm-6 col-xl-3">
-            <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">
-              <i className="fa fa-chart-pie fa-3x text-primary"></i>
-              <div className="ms-3">
-                <p className="mb-2">Total Revenue</p>
-                <h6 className="mb-0">$1234</h6>
-              </div>
-            </div>
-          </div>
+            </>
+          ) : null}
         </div>
       </div>
 

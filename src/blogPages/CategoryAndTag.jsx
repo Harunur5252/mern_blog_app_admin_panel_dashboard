@@ -46,6 +46,7 @@ function CategoryAndTag({ title }) {
     });
     setTagError("");
   };
+
   // category mutation
   const [addCategory, { isLoading, isError, isSuccess }] =
     useAddCategoryMutation();
@@ -244,21 +245,23 @@ function CategoryAndTag({ title }) {
                                     </button>
                                   </Link>
                                 </td>
-                                <td>
-                                  <button
-                                    className="btn btn-sm btn-danger"
-                                    onClick={() =>
-                                      handleCategoryDelete(category?._id)
-                                    }
-                                    disabled={categoryDeleteLoading}
-                                  >
-                                    {categoryDeleteLoading ? (
-                                      <Loader />
-                                    ) : (
-                                      "Delete Category"
-                                    )}
-                                  </button>
-                                </td>
+                                {category?.blogs?.length > 0 ? null : (
+                                  <td>
+                                    <button
+                                      className="btn btn-sm btn-danger"
+                                      onClick={() =>
+                                        handleCategoryDelete(category?._id)
+                                      }
+                                      disabled={categoryDeleteLoading}
+                                    >
+                                      {categoryDeleteLoading ? (
+                                        <Loader />
+                                      ) : (
+                                        "Delete Category"
+                                      )}
+                                    </button>
+                                  </td>
+                                )}
                               </tr>
                             );
                           })
@@ -306,19 +309,21 @@ function CategoryAndTag({ title }) {
                                     </button>
                                   </Link>
                                 </td>
-                                <td>
-                                  <button
-                                    className="btn btn-sm btn-danger"
-                                    onClick={() => handleTagDelete(tag?._id)}
-                                    disabled={tagDeleteLoading}
-                                  >
-                                    {tagDeleteLoading ? (
-                                      <Loader />
-                                    ) : (
-                                      "Delete Tag"
-                                    )}
-                                  </button>
-                                </td>
+                                {tag?.blogs?.length > 0 ? null : (
+                                  <td>
+                                    <button
+                                      className="btn btn-sm btn-danger"
+                                      onClick={() => handleTagDelete(tag?._id)}
+                                      disabled={tagDeleteLoading}
+                                    >
+                                      {tagDeleteLoading ? (
+                                        <Loader />
+                                      ) : (
+                                        "Delete Tag"
+                                      )}
+                                    </button>
+                                  </td>
+                                )}
                               </tr>
                             );
                           })

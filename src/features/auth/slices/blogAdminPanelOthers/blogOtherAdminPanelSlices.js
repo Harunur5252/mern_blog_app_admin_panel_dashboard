@@ -36,14 +36,14 @@ export const blogAdminPanelOtherApiSlice = blogOtherApiSlice.injectEndpoints({
       invalidatesTags: ["BlogAdminPanelOthers"],
     }),
     deleteCategory: builder.mutation({
-      query: ({_id}) => ({
+      query: ({ _id }) => ({
         url: `${USER_URL}/category/${_id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["BlogAdminPanelOthers"],
     }),
     deleteTag: builder.mutation({
-      query: ({_id}) => ({
+      query: ({ _id }) => ({
         url: `${USER_URL}/tag/${_id}`,
         method: "DELETE",
       }),
@@ -63,10 +63,19 @@ export const blogAdminPanelOtherApiSlice = blogOtherApiSlice.injectEndpoints({
       }),
       providesTags: ["BlogAdminPanelOthers"],
     }),
+    addBlog: builder.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/add/blog`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["BlogAdminPanelOthers"],
+    }),
   }),
 });
 
 export const {
+  useAddBlogMutation,
   useDeleteCategoryMutation,
   useDeleteTagMutation,
   useAddCategoryMutation,

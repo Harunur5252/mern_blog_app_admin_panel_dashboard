@@ -106,7 +106,7 @@ function UserRoles({ title }) {
                       className="btn btn-success btn-sm"
                       onClick={() => setIsUser(false)}
                     >
-                      Fetch All User
+                      Fetch All User Role
                     </button>
                   )}
                 </div>

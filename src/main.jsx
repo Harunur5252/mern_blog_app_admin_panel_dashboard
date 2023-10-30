@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "react-datepicker/dist/react-datepicker.css";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -21,6 +22,7 @@ import AccountActivation from "./pages/AccountActivation.jsx";
 import CategoryAndTag from "./blogPages/CategoryAndTag.jsx";
 import UpdateCategory from "./blogPages/UpdateCategory.jsx";
 import UpdateTag from "./blogPages/UpdateTag.jsx";
+import AddBlog from "./blogPages/AddBlog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,39 +40,43 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard/all-user",
-        element: <AllUser title="All-User" />,
+        element: <AllUser title="All User" />,
       },
       {
         path: "/dashboard/add-user-profile",
-        element: <AddUserProfile title="add-user-profile" />,
+        element: <AddUserProfile title="add User Profile" />,
       },
       {
         path: "/dashboard/my-profile",
-        element: <MyProfile title="my-profile" />,
+        element: <MyProfile title="My Profile" />,
       },
       {
         path: "/dashboard/my-profile/:id",
-        element: <UpdateMyProfile title="update-profile" />,
+        element: <UpdateMyProfile title="Update Profile" />,
       },
       {
         path: "/dashboard/singleUser/:id",
-        element: <SingleUser title="single-user-profile" />,
+        element: <SingleUser title="Single User Profile" />,
       },
       {
         path: "/dashboard/user-role",
-        element: <UserRoles title="user-role" />,
+        element: <UserRoles title="User Role" />,
       },
       {
         path: "/dashboard/blog/categories-tags",
-        element: <CategoryAndTag title="category-tag" />,
+        element: <CategoryAndTag title="Category-Tag" />,
       },
       {
         path: "/dashboard/blog/category/:id",
-        element: <UpdateCategory title="update category" />,
+        element: <UpdateCategory title="Update Category" />,
       },
       {
         path: "/dashboard/blog/tag/:id",
-        element: <UpdateTag title="update tag" />,
+        element: <UpdateTag title="Update Tag" />,
+      },
+      {
+        path: "/dashboard/blog/add/blog",
+        element: <AddBlog title="Add Blog" />,
       },
     ],
   },
