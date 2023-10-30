@@ -71,10 +71,18 @@ export const blogAdminPanelOtherApiSlice = blogOtherApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["BlogAdminPanelOthers"],
     }),
+    getAllBlog: builder.query({
+      query: () => ({
+        url: `${USER_URL}/all/blog`,
+        method: "GET",
+      }),
+      providesTags: ["BlogAdminPanelOthers"],
+    }),
   }),
 });
 
 export const {
+  useGetAllBlogQuery,
   useAddBlogMutation,
   useDeleteCategoryMutation,
   useDeleteTagMutation,

@@ -9,6 +9,7 @@ import {
 } from "../features/auth/slices/blogAdminPanelOthers/blogOtherAdminPanelSlices";
 import toast from "react-hot-toast";
 import Loader from "../components/Loader";
+import { Link } from "react-router-dom";
 
 function AddBlog({ title }) {
   const {
@@ -98,7 +99,23 @@ function AddBlog({ title }) {
         <div className="row bg-light rounded align-items-center justify-content-center mx-0">
           <div className="col-sm-12">
             <div className="bg-light rounded h-100 p-4">
-              <h6 className="mb-4">Add Blog</h6>
+              <div className="row">
+                <div className="col-6">
+                  <h6 className="mb-4">Add Blog</h6>
+                </div>
+                <div className="col-6">
+                  <div style={{ float: "right" }}>
+                    <Link to={`/dashboard/blog/categories-tags`}>
+                      <button
+                        type="button"
+                        className="btn btn-md btn-dark"
+                      >
+                        Add Category/Tag
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-3">
                   <label htmlFor="exampleInputEmail1" className="form-label">

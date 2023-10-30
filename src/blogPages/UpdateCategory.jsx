@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useGetAllCategoryQuery,
   useUpdateCategoryMutation,
@@ -68,7 +68,23 @@ function UpdateCategory({ title }) {
         <div className="row bg-light rounded align-items-center justify-content-center mx-0">
           <div className="col-sm-12">
             <div className="bg-light rounded h-100 p-4">
-              <h6 className="mb-4">Update Category</h6>
+              <div className="row">
+                <div className="col-6">
+                  <h6 className="mb-4">Update Category</h6>
+                </div>
+                <div className="col-6">
+                  <div style={{ float: "right" }}>
+                    <Link to={`/dashboard/blog/categories-tags`}>
+                      <button
+                        type="button"
+                        className="btn btn-md btn-dark"
+                      >
+                        Back
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
               {category ? (
                 <>
                   <div className="col-6">
