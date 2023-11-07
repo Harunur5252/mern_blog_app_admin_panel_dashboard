@@ -10,7 +10,7 @@ function Sidebar({ sidebarToggle }) {
     }),
   });
   useEffect(() => {
-    if (user?.role?.includes("user")) {
+    if (user?.role?.includes("user") && !user?.role?.includes("admin")) {
       navigate("/dashboard");
     }
   }, [user]);
@@ -128,6 +128,14 @@ function Sidebar({ sidebarToggle }) {
                     }
                   >
                     Add Blog
+                  </NavLink>
+                  <NavLink
+                    to="/dashboard/blog/show/all/blog"
+                    className={({ isActive }) =>
+                      isActive ? "dropdown-item active" : "dropdown-item"
+                    }
+                  >
+                    Show All Blog
                   </NavLink>
                 </>
               )}

@@ -71,6 +71,21 @@ export const blogAdminPanelOtherApiSlice = blogOtherApiSlice.injectEndpoints({
       }),
       invalidatesTags: ["BlogAdminPanelOthers"],
     }),
+    updateBlog: builder.mutation({
+      query: ({ formData, _id }) => ({
+        url: `${USER_URL}/blog/${_id}`,
+        method: "PUT",
+        body: formData,
+      }),
+      invalidatesTags: ["BlogAdminPanelOthers"],
+    }),
+    deleteBlog: builder.mutation({
+      query: ({_id }) => ({
+        url: `${USER_URL}/blog/${_id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["BlogAdminPanelOthers"],
+    }),
     getAllBlog: builder.query({
       query: () => ({
         url: `${USER_URL}/all/blog`,
@@ -82,6 +97,8 @@ export const blogAdminPanelOtherApiSlice = blogOtherApiSlice.injectEndpoints({
 });
 
 export const {
+  useDeleteBlogMutation,
+  useUpdateBlogMutation,
   useGetAllBlogQuery,
   useAddBlogMutation,
   useDeleteCategoryMutation,

@@ -46,8 +46,7 @@ function HomeCard() {
     <>
       <div className="container-fluid pt-4 px-4">
         <div className="row g-4">
-          {authUser?.role?.includes("admin") ||
-          authUser?.role?.includes("user") ? (
+          {authUser?.role?.includes("admin") ? (
             <>
               <div className="col-sm-6 col-xl-3">
                 <div className="bg-light rounded d-flex align-items-center justify-content-between p-4">

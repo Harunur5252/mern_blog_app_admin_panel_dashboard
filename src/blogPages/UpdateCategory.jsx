@@ -21,6 +21,9 @@ const schema = yup
   .required();
 
 function UpdateCategory({ title }) {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   const {
     register,
     handleSubmit,
@@ -75,10 +78,7 @@ function UpdateCategory({ title }) {
                 <div className="col-6">
                   <div style={{ float: "right" }}>
                     <Link to={`/dashboard/blog/categories-tags`}>
-                      <button
-                        type="button"
-                        className="btn btn-md btn-dark"
-                      >
+                      <button type="button" className="btn btn-md btn-dark">
                         Back
                       </button>
                     </Link>

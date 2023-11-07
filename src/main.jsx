@@ -23,6 +23,8 @@ import CategoryAndTag from "./blogPages/CategoryAndTag.jsx";
 import UpdateCategory from "./blogPages/UpdateCategory.jsx";
 import UpdateTag from "./blogPages/UpdateTag.jsx";
 import AddBlog from "./blogPages/AddBlog.jsx";
+import ShowAllBlog from "./blogPages/ShowAllBlog.jsx";
+import EditBlog from "./blogPages/EditBlog.jsx";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +79,14 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/blog/add/blog",
         element: <AddBlog title="Add Blog" />,
+      },
+      {
+        path: "/dashboard/blog/show/all/blog",
+        element: <ShowAllBlog title="Show All Blog" />,
+      },
+      {
+        path: "/dashboard/blog/update/blog/:id",
+        element: <EditBlog title="Update Blog" />,
       },
     ],
   },

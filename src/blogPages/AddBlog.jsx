@@ -12,6 +12,9 @@ import Loader from "../components/Loader";
 import { Link } from "react-router-dom";
 
 function AddBlog({ title }) {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   const {
     register,
     handleSubmit,
@@ -21,9 +24,12 @@ function AddBlog({ title }) {
   } = useForm();
   const [blogDate, setBlogDate] = useState(new Date());
   const editor = useRef(null);
+  const editorTwo = useRef(null);
   const [content, setContent] = useState("");
+  const [contentTwo, setContentTwo] = useState("");
   const [mediaPreview, setMediaPreview] = useState("");
   const [descriptionError, setDescriptionError] = useState("");
+  const [descriptionErrorTwo, setDescriptionErrorTwo] = useState("");
   // tag query
   const { allCategory } = useGetAllCategoryQuery(undefined, {
     selectFromResult: ({ data }) => ({
@@ -49,8 +55,9 @@ function AddBlog({ title }) {
       reset();
       setMediaPreview("");
       setContent("");
+      setContentTwo("");
     }
-  }, [reset, isSuccess, isError, setMediaPreview, setContent]);
+  }, [reset, isSuccess, isError, setMediaPreview, setContent, setContentTwo]);
   // preview img
   const handleInputFileChange = (e) => {
     const { name, files } = e.target;
@@ -61,16 +68,24 @@ function AddBlog({ title }) {
   const onSubmit = async (data) => {
     const blogData = {
       title: data?.title,
-      description: content,
+      descriptionOne: content,
+      descriptionTwo: contentTwo,
       category: data?.category,
       tag: data?.tag,
       publishDate: data?.publishDate,
     };
     if (content === "" || editor === null) {
-      setDescriptionError("description is required");
+      setDescriptionErrorTwo("");
+      setDescriptionError("description one is required");
+      return;
+    }
+    if (contentTwo === "" || editorTwo === null) {
+      setDescriptionError("");
+      setDescriptionErrorTwo("description two is required");
       return;
     }
     setDescriptionError("");
+    setDescriptionErrorTwo("");
     try {
       const formData = new FormData();
       formData.append("image", data?.blogImg[0]);
@@ -83,12 +98,16 @@ function AddBlog({ title }) {
     } catch (error) {
       console.log(error);
       return toast.error(
-        error?.errMsg || "something went wrong to create blog"
+        error?.data?.errMsg ||
+          error?.data?.error ||
+          "something went wrong to create blog"
       );
     } finally {
       setDescriptionError("");
+      setDescriptionErrorTwo("");
       setMediaPreview("");
       setContent("");
+      setContentTwo("");
     }
   };
 
@@ -100,16 +119,22 @@ function AddBlog({ title }) {
           <div className="col-sm-12">
             <div className="bg-light rounded h-100 p-4">
               <div className="row">
-                <div className="col-6">
+                <div className="col-4">
                   <h6 className="mb-4">Add Blog</h6>
                 </div>
-                <div className="col-6">
+                <div className="col-4">
+                  <div style={{ float: "right" }}>
+                    <Link to={`/dashboard/blog/show/all/blog`}>
+                      <button type="button" className="btn btn-md btn-dark">
+                        ShowAllBlog
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+                <div className="col-4">
                   <div style={{ float: "right" }}>
                     <Link to={`/dashboard/blog/categories-tags`}>
-                      <button
-                        type="button"
-                        className="btn btn-md btn-dark"
-                      >
+                      <button type="button" className="btn btn-md btn-dark">
                         Add Category/Tag
                       </button>
                     </Link>
@@ -140,7 +165,7 @@ function AddBlog({ title }) {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputPassword1" className="form-label">
-                    Description
+                    Description One
                   </label>
                   <JoditEditor
                     ref={editor}
@@ -150,6 +175,19 @@ function AddBlog({ title }) {
                     }}
                   />
                   <span style={{ color: "red" }}>{descriptionError}</span>
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="exampleInputPassword1" className="form-label">
+                    Description Two
+                  </label>
+                  <JoditEditor
+                    ref={editorTwo}
+                    value={contentTwo}
+                    onChange={(newContent) => {
+                      setContentTwo(newContent);
+                    }}
+                  />
+                  <span style={{ color: "red" }}>{descriptionErrorTwo}</span>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="exampleInputPassword1" className="form-label">

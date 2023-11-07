@@ -25,6 +25,9 @@ const schema = yup
   .required();
 
 function CategoryAndTag({ title }) {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   const {
     register,
     handleSubmit,
