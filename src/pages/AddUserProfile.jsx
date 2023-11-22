@@ -9,7 +9,6 @@ import {
 } from "../features/auth/slices/userApiSlices";
 import { toast } from "react-hot-toast";
 import Loader from "../components/Loader";
-import { useSelector } from "react-redux";
 import EmailVerify from "../components/EmailVerify";
 
 const schema = yup
@@ -60,6 +59,7 @@ const schema = yup
       .lowercase()
       .trim(),
     website: yup.string().url().nullable().required("website is required!"),
+    resume: yup.string().url().nullable().required("resume is required!"),
     facebook: yup.string().url().nullable().required("facebook is required!"),
     youtube: yup.string().url().nullable().required("youtube is required!"),
     twitter: yup.string().url().nullable().required("twitter is required!"),
@@ -113,6 +113,7 @@ function AddUserProfile({ title }) {
         firstName: data?.firstName,
         lastName: data?.lastName,
         website: data?.website,
+        resume: data?.resume,
         bio: data?.bio,
         facebook: data?.facebook,
         youtube: data?.youtube,
@@ -130,7 +131,9 @@ function AddUserProfile({ title }) {
       navigate("/dashboard/my-profile");
       return toast.success("Success!");
     } catch (err) {
-      return toast.error(err?.data?.errMsg || "something went wrong to create profile");
+      return toast.error(
+        err?.data?.errMsg || "something went wrong to create profile"
+      );
     }
   };
   return (
@@ -202,6 +205,20 @@ function AddUserProfile({ title }) {
                     <label htmlFor="floatingInput">Website Link</label>
                     <span style={{ color: "red" }}>
                       {errors?.website?.message}
+                    </span>
+                  </div>
+
+                  <div className="form-floating mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="floatingInput"
+                      placeholder="Enter Resume Link"
+                      {...register("resume")}
+                    />
+                    <label htmlFor="floatingInput">Resume Link</label>
+                    <span style={{ color: "red" }}>
+                      {errors?.resume?.message}
                     </span>
                   </div>
 

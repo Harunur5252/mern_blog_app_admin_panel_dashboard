@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import parse from "html-react-parser";
 import format from "date-fns/format";
 import { Link } from "react-router-dom";
 import {
   useDeleteBlogMutation,
   useGetAllBlogQuery,
+  usePublishBlogMutation,
 } from "../features/auth/slices/blogAdminPanelOthers/blogOtherAdminPanelSlices";
 import Loader from "../components/Loader";
 import toast from "react-hot-toast";
+
+
 
 function ShowAllBlog({ title }) {
   useEffect(() => {
@@ -21,10 +23,12 @@ function ShowAllBlog({ title }) {
     }),
   });
   const [deleteBlog, { isLoading }] = useDeleteBlogMutation();
+  const [publishBlog, { isLoading: publishBlogLoading }] =
+    usePublishBlogMutation();
+
   const handleDeleteBlog = async (_id) => {
     try {
       const res = await deleteBlog({ _id }).unwrap();
-      console.log(res);
       if (res?.error?.data?.error) {
         return toast.error(res?.error?.data?.error);
       }
@@ -33,6 +37,26 @@ function ShowAllBlog({ title }) {
       console.log(error);
       return toast.error(
         error?.data?.errMsg || "something went wrong to delete blog"
+      );
+    }
+  };
+  const blogPublished = async (_id) => {
+    const blogCompleted = {
+      completed: true,
+      _id,
+    };
+    try {
+      const res = await publishBlog(blogCompleted).unwrap();
+      if (res?.error?.data?.error) {
+        return toast.error(res?.error?.data?.error);
+      }
+      return toast.success("blog published successfully");
+    } catch (error) {
+      console.log(error);
+      return toast.error(
+        error?.data?.errMsg ||
+          error?.error ||
+          "something went wrong to publish blog"
       );
     }
   };
@@ -57,7 +81,10 @@ function ShowAllBlog({ title }) {
                   </div>
                 </div>
               </div>
-              <table className="table table-stripe mt-4" width={100}>
+              <table
+                className="table table-responsive table-stripe mt-4"
+                style={{ width: "100%" }}
+              >
                 <thead>
                   <tr>
                     <th scope="col" width={10}>
@@ -65,9 +92,6 @@ function ShowAllBlog({ title }) {
                     </th>
                     <th scope="col" width={10}>
                       Title
-                    </th>
-                    <th scope="col" width={20}>
-                      Description
                     </th>
                     <th scope="col" width={10}>
                       Category
@@ -79,13 +103,16 @@ function ShowAllBlog({ title }) {
                       PublishedDate
                     </th>
                     <th scope="col" width={10}>
+                      Published
+                    </th>
+                    <th scope="col" width={10}>
                       Image
                     </th>
                     <th
                       scope="col"
                       className="text-center"
-                      colSpan={3}
-                      width={15}
+                      colSpan={4}
+                      width={20}
                     >
                       Actions
                     </th>
@@ -97,12 +124,32 @@ function ShowAllBlog({ title }) {
                       <tr key={blog?._id}>
                         <th scope="row">{blogSerialNumber++}</th>
                         <td>{blog?.title?.slice(0, 20)}</td>
-                        <td>{parse(blog?.description)}</td>
                         <td>{blog?.category}</td>
                         <td>{blog?.tag}</td>
                         <td>
-                          {format(new Date(blog?.publishDate), "dd/MMMM/YYY")}
+                          {format(new Date(blog?.publishDate), "dd/MMM/YYY")}
                         </td>
+                        {blog?.completed ? (
+                          <td
+                            style={{
+                              color: "blue",
+                              fontWeight: "bold",
+                              fontSize: "1rem",
+                            }}
+                          >
+                            complete
+                          </td>
+                        ) : (
+                          <td
+                            style={{
+                              color: "red",
+                              fontWeight: "bold",
+                              fontSize: "1rem",
+                            }}
+                          >
+                            incomplete
+                          </td>
+                        )}
                         <td>
                           <img
                             className="rounded"
@@ -133,11 +180,25 @@ function ShowAllBlog({ title }) {
                           </button>
                         </td>
                         <td>
+                          <Link
+                            to={`/dashboard/blog/details/blog/${blog?._id}`}
+                          >
+                            <button
+                              className="btn btn-danger btn-md"
+                              type="button"
+                            >
+                              View
+                            </button>
+                          </Link>
+                        </td>
+                        <td>
                           <button
                             className="btn btn-danger btn-md"
                             type="button"
+                            onClick={() => blogPublished(blog?._id)}
+                            disabled={publishBlogLoading}
                           >
-                            View
+                            {publishBlogLoading ? <Loader /> : "Publish"}
                           </button>
                         </td>
                       </tr>

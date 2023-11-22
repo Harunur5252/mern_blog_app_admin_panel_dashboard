@@ -80,9 +80,17 @@ export const blogAdminPanelOtherApiSlice = blogOtherApiSlice.injectEndpoints({
       invalidatesTags: ["BlogAdminPanelOthers"],
     }),
     deleteBlog: builder.mutation({
-      query: ({_id }) => ({
+      query: ({ _id }) => ({
         url: `${USER_URL}/blog/${_id}`,
         method: "DELETE",
+      }),
+      invalidatesTags: ["BlogAdminPanelOthers"],
+    }),
+    publishBlog: builder.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/blog/published/${data?._id}`,
+        method: "PUT",
+        body: data,
       }),
       invalidatesTags: ["BlogAdminPanelOthers"],
     }),
@@ -93,10 +101,37 @@ export const blogAdminPanelOtherApiSlice = blogOtherApiSlice.injectEndpoints({
       }),
       providesTags: ["BlogAdminPanelOthers"],
     }),
+    addBlogyAbout: builder.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/add/blogy/about`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["BlogAdminPanelOthers"],
+    }),
+    updateBlogyAbout: builder.mutation({
+      query: (data) => ({
+        url: `${USER_URL}/blogy/about/${data?._id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["BlogAdminPanelOthers"],
+    }),
+    getBlogyAbout: builder.query({
+      query: () => ({
+        url: `${USER_URL}/blogy/about`,
+        method: "GET",
+      }),
+      providesTags: ["BlogAdminPanelOthers"],
+    }),
   }),
 });
 
 export const {
+  useUpdateBlogyAboutMutation,
+  useGetBlogyAboutQuery,
+  useAddBlogyAboutMutation,
+  usePublishBlogMutation,
   useDeleteBlogMutation,
   useUpdateBlogMutation,
   useGetAllBlogQuery,

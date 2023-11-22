@@ -63,6 +63,7 @@ const schema = yup.object({
     .lowercase()
     .trim(),
   website: yup.string().url().nullable(),
+  resume: yup.string().url().nullable(),
   // .required("website is required!")
   facebook: yup.string().url().nullable(),
   // .required("facebook is required!")
@@ -99,6 +100,7 @@ function UpdateMyProfile({ title }) {
       firstName: user?.profile?.firstName,
       lastName: user?.profile?.lastName,
       website: user?.profile?.website,
+      resume: user?.profile?.resume,
       bio: user?.profile?.bio,
       facebook: user?.profile?.social?.facebook,
       youtube: user?.profile?.social?.youtube,
@@ -161,6 +163,7 @@ function UpdateMyProfile({ title }) {
           email: data?.email,
           password: data?.password,
           website: data?.website,
+          resume: data?.resume,
           bio: data?.bio,
           facebook: data?.facebook,
           youtube: data?.youtube,
@@ -281,6 +284,20 @@ function UpdateMyProfile({ title }) {
                     <label htmlFor="floatingInput">Website Link</label>
                     <span style={{ color: "red" }}>
                       {errors?.website?.message}
+                    </span>
+                  </div>
+
+                  <div className="form-floating mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="floatingInput"
+                      placeholder="Enter Resume Link"
+                      {...register("resume")}
+                    />
+                    <label htmlFor="floatingInput">Resume Link</label>
+                    <span style={{ color: "red" }}>
+                      {errors?.resume?.message}
                     </span>
                   </div>
 

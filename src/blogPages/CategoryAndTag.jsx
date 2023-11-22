@@ -19,7 +19,7 @@ const schema = yup
     categoryName: yup
       .string()
       .required("categoryName is required!")
-      .max(20, "categoryName must be less than 20 characters!")
+      .max(60, "categoryName must be less than 60 characters!")
       .trim(),
   })
   .required();
@@ -86,8 +86,12 @@ function CategoryAndTag({ title }) {
 
   // category add
   const onSubmit = async (data) => {
+    const categoryData = {
+      categoryName: data?.categoryName,
+      categoryItem: data?.categoryName,
+    };
     try {
-      const res = await addCategory(data).unwrap();
+      const res = await addCategory(categoryData).unwrap();
       return toast.success("category added successfully");
     } catch (error) {
       console.log(error);
@@ -248,7 +252,19 @@ function CategoryAndTag({ title }) {
                                     </button>
                                   </Link>
                                 </td>
-                                {category?.blogs?.length > 0 ? null : (
+                                {category?.blogs?.length > 0 ? (
+                                  <td className="text-center">
+                                    <span
+                                      style={{
+                                        color: "blue",
+                                        fontWeight: "bold",
+                                        fontSize: "1.2rem",
+                                      }}
+                                    >
+                                      active
+                                    </span>
+                                  </td>
+                                ) : (
                                   <td>
                                     <button
                                       className="btn btn-sm btn-danger"
@@ -312,7 +328,19 @@ function CategoryAndTag({ title }) {
                                     </button>
                                   </Link>
                                 </td>
-                                {tag?.blogs?.length > 0 ? null : (
+                                {tag?.blogs?.length > 0 ? (
+                                  <td className="text-center">
+                                    <span
+                                      style={{
+                                        color: "blue",
+                                        fontWeight: "bold",
+                                        fontSize: "1.2rem",
+                                      }}
+                                    >
+                                      active
+                                    </span>
+                                  </td>
+                                ) : (
                                   <td>
                                     <button
                                       className="btn btn-sm btn-danger"

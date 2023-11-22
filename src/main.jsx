@@ -25,6 +25,9 @@ import UpdateTag from "./blogPages/UpdateTag.jsx";
 import AddBlog from "./blogPages/AddBlog.jsx";
 import ShowAllBlog from "./blogPages/ShowAllBlog.jsx";
 import EditBlog from "./blogPages/EditBlog.jsx";
+import BlogDetails from "./blogPages/BlogDetails.jsx";
+import BlogAbout from "./blogPages/BlogAbout.jsx";
+import UpdateBlogAbout from "./blogPages/UpdateBlogAbout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +90,18 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/blog/update/blog/:id",
         element: <EditBlog title="Update Blog" />,
+      },
+      {
+        path: "/dashboard/blog/details/blog/:id",
+        element: <BlogDetails title="Details Blog" />,
+      },
+      {
+        path: "/dashboard/blog/about",
+        element: <BlogAbout title="About Blog" />,
+      },
+      {
+        path: "/dashboard/blog/about/:id",
+        element: <UpdateBlogAbout title="update About Blog" />,
       },
     ],
   },

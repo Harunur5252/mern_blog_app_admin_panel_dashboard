@@ -15,7 +15,7 @@ const schema = yup
     categoryName: yup
       .string()
       .required("categoryName is required!")
-      .max(20, "categoryName must be less than 20 characters!")
+      .max(60, "categoryName must be less than 60 characters!")
       .trim(),
   })
   .required();
@@ -49,7 +49,8 @@ function UpdateCategory({ title }) {
 
   const onSubmit = async (data) => {
     const categoryData = {
-      ...data,
+      categoryName: data?.categoryName,
+      categoryItem: data?.categoryName,
       _id: category?._id,
     };
     try {

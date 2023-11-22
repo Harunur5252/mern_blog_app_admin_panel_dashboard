@@ -137,6 +137,14 @@ function Sidebar({ sidebarToggle }) {
                   >
                     Show All Blog
                   </NavLink>
+                  <NavLink
+                    to="/dashboard/blog/about"
+                    className={({ isActive }) =>
+                      isActive ? "dropdown-item active" : "dropdown-item"
+                    }
+                  >
+                    About
+                  </NavLink>
                 </>
               )}
             </div>
